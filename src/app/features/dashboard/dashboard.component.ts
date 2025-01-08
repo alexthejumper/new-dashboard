@@ -24,8 +24,8 @@ export class DashboardComponent implements OnInit {
     this.visitorDataService.getWeeklyStats().subscribe(
       (data) => {
         //console.log(data);
-        const weeks = data.map((d: any) => `Week ${d.week}`);
-        const visitorCounts = data.map((d: any) => d.totalVisitor);
+        const weeks = data.map((d) => `Week ${d.week}`);
+        const visitorCounts = data.map((d) => d.totalVisitor);
 
         this.lChartOptions = {
           series: [
