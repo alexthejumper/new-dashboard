@@ -1,0 +1,14 @@
+<visitor-bo-centered-layout>
+    <h3 class="page-heading">Dashboard</h3>
+    <div class="useful-links-container">
+        <mat-card>
+            <visitor-bo-line-chart [chartOptions]="lChartOptions"></visitor-bo-line-chart>
+        </mat-card>
+
+        <mat-card>
+            <visitor-bo-pie-chart [chartOptions]="pChartOptions"></visitor-bo-pie-chart>
+        </mat-card>
+    </div>
+</visitor-bo-centered-layout>
+<router-outlet />
+  
