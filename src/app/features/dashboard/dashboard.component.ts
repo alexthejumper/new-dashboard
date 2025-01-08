@@ -90,6 +90,9 @@ export class DashboardComponent implements OnInit {
 
       chart: {
         type: 'pie',
+        toolbar: {
+          show: true // Enables the toolbar
+        },
         width: 300,
       },
       
