@@ -23,10 +23,9 @@ export class DashboardComponent implements OnInit {
   fetchWeeklyStats(): void {
     this.visitorDataService.getWeeklyStats().subscribe(
       (data) => {
-        //console.log(data);
         const weeks = data.map((d) => `Week ${d.week}`);
         const visitorCounts = data.map((d) => d.totalVisitor);
-
+  
         this.lChartOptions = {
           series: [
             {
@@ -50,20 +49,20 @@ export class DashboardComponent implements OnInit {
           xaxis: { categories: weeks },
           yaxis: {
             labels: {
-              formatter: (value: number) => Math.round(value).toString()
-            }
+              formatter: (value: number) => Math.round(value).toString() // Ensure whole numbers
+            },
+            tickAmount: Math.max(...visitorCounts), // Number of ticks based on the max value
+            min: 0, // Ensure it starts at 0
+            forceNiceScale: true // Ensures cleaner intervals
           }
         };
-
-        //console.log('Chart Options:', this.lChartOptions);
-        //console.log('Chart Data:', this.lChartOptions?.series[0]?.data);
-
       },
       (error) => {
         console.error('Error fetching weekly stats', error);
       }
     );
   }
+  
 
 
   fetchVisitorStatsByReason(): void {
