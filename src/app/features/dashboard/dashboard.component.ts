@@ -11,7 +11,7 @@ import { PieChartOptions } from '../../shared/components/presentation/pie-chart/
 export class DashboardComponent implements OnInit {
   public lChartOptions!: LineChartOptions;
   public pChartOptions!: PieChartOptions;
-  public pieChartData: { reason: string; Count: number }[] = [];
+  public pieChartData: { reason: string; count: number }[] = [];
 
   constructor(private visitorDataService: VisitorDataService) {}
 
@@ -21,10 +21,11 @@ export class DashboardComponent implements OnInit {
   }
 
   fetchWeeklyStats(): void {
-    this.visitorDataService.getWeeklyStats().subscribe(
+    this.visitorDataService.getVisitCount().subscribe(
       (data) => {
+        //console.log(data);
         const weeks = data.map((d) => `Week ${d.week}`);
-        const visitorCounts = data.map((d) => d.totalVisitor);
+        const visitorCounts = data.map((d) => d.totalVisits);
   
         this.lChartOptions = {
           series: [
@@ -46,6 +47,7 @@ export class DashboardComponent implements OnInit {
             style: { color: '#e13614' }
           },
           grid: {},
+
           xaxis: { categories: weeks },
           yaxis: {
             labels: {
@@ -56,6 +58,8 @@ export class DashboardComponent implements OnInit {
             forceNiceScale: true // Ensures cleaner intervals
           }
         };
+
+        console.log(this.lChartOptions.series);
       },
       (error) => {
         console.error('Error fetching weekly stats', error);
@@ -66,7 +70,7 @@ export class DashboardComponent implements OnInit {
 
 
   fetchVisitorStatsByReason(): void {
-    this.visitorDataService.getVisitorStatsByReason().subscribe((data => {
+    this.visitorDataService.getReasonCount().subscribe((data => {
       this.pieChartData = data || [];
       this.updatePieChart();
     }))
@@ -76,7 +80,7 @@ export class DashboardComponent implements OnInit {
   updatePieChart(): void {
     if (this.pieChartData && this.pieChartData.length > 0) {
       const reasons  = this.pieChartData.map(data => data.reason);
-     const visitorCounts = this.pieChartData.map(data => data.Count);
+     const visitorCounts = this.pieChartData.map(data => data.count);
 
      this.pChartOptions = {
       title: {

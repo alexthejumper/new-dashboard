@@ -10,6 +10,7 @@ import { PieChartComponent } from './shared/components/presentation/pie-chart/pi
 import { NgApexchartsModule } from "ng-apexcharts";
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatCardModule } from '@angular/material/card';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { MatCardModule } from '@angular/material/card';
     BrowserModule,
     AppRoutingModule,
     NgApexchartsModule,
-    MatCardModule
+    MatCardModule,
+    HttpClientModule
   ],
   providers: [
     provideAnimationsAsync()
