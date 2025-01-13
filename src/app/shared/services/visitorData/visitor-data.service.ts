@@ -39,7 +39,7 @@ export class VisitorDataService {
   // }
 
 
-  getVisitCount(): Observable<VisitCountRequest[]> {
+  getVisitCount(): Observable<VisitCountRequest[]> { 
     return this.httpClient.get<VisitCountRequest[]>(`${this.visitorDataBaseUrl}/visit-count`);
   }
 

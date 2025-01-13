@@ -21,50 +21,50 @@ export class DashboardComponent implements OnInit {
   }
 
   fetchWeeklyStats(): void {
-    this.visitorDataService.getVisitCount().subscribe(
-      (data) => {
-        //console.log(data);
-        const weeks = data.map((d) => `Week ${d.week}`);
-        const visitorCounts = data.map((d) => d.totalVisits);
+    const observer = {
+      next: (data: any) => {
+        const weeks = data.map((d: any) => `Week ${d.week}`);
+        const visitorCounts = data.map((d: any) => d.totalVisits);
   
         this.lChartOptions = {
           series: [
             {
-              name: 'Number of Visitors by week',
-              data: visitorCounts
-            }
+              name: 'Number of Visitors by Week',
+              data: visitorCounts,
+            },
           ],
           chart: {
             height: 350,
             type: 'line',
-            zoom: { enabled: false }
+            zoom: { enabled: false },
           },
           dataLabels: { enabled: false },
           stroke: { curve: 'straight' },
           title: {
             text: 'Number of Visitors per Week',
             align: 'center',
-            style: { color: '#e13614' }
+            style: { color: '#e13614' },
           },
           grid: {},
-
           xaxis: { categories: weeks },
           yaxis: {
             labels: {
-              formatter: (value: number) => Math.round(value).toString() // Ensure whole numbers
+              formatter: (value: number) => Math.round(value).toString(), // Ensure whole numbers
             },
             tickAmount: Math.max(...visitorCounts), // Number of ticks based on the max value
             min: 0, // Ensure it starts at 0
-            forceNiceScale: true // Ensures cleaner intervals
-          }
+            forceNiceScale: true, // Ensures cleaner intervals
+          },
         };
-
+  
         console.log(this.lChartOptions.series);
       },
-      (error) => {
-        console.error('Error fetching weekly stats', error);
-      }
-    );
+      error: (err: any) => {
+        console.error('Error fetching weekly stats', err);
+      },
+    };
+  
+    this.visitorDataService.getVisitCount().subscribe(observer);
   }
   
 
