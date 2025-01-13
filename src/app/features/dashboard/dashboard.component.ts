@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { VisitorDataService } from '../../shared/services/visitorData/visitor-data.service';
 import { LineChartOptions } from '../../shared/components/presentation/line-chart/line-chart.component';
 import { PieChartOptions } from '../../shared/components/presentation/pie-chart/pie-chart.component';
+import { ReasonCountRequest, VisitCountRequest } from '../../core/models/model-back';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,7 +23,7 @@ export class DashboardComponent implements OnInit {
 
   fetchWeeklyStats(): void {
     const observer = {
-      next: (data: any) => {
+      next: (data: VisitCountRequest[]) => {
         const weeks = data.map((d: any) => `Week ${d.week}`);
         const visitorCounts = data.map((d: any) => d.totalVisits);
   
@@ -71,7 +72,7 @@ export class DashboardComponent implements OnInit {
 
   fetchVisitorStatsByReason(): void {
     const observer = {
-      next: (data: any) => {
+      next: (data: ReasonCountRequest[]) => {
         this.pieChartData = data || [];
         this.updatePieChart();
       },
