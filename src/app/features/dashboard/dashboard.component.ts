@@ -70,11 +70,19 @@ export class DashboardComponent implements OnInit {
 
 
   fetchVisitorStatsByReason(): void {
-    this.visitorDataService.getReasonCount().subscribe((data => {
-      this.pieChartData = data || [];
-      this.updatePieChart();
-    }))
+    const observer = {
+      next: (data: any) => {
+        this.pieChartData = data || [];
+        this.updatePieChart();
+      },
+      error: (err: any) => {
+        console.error('Error fetching visitor stats by reason', err);
+      },
+    };
+  
+    this.visitorDataService.getReasonCount().subscribe(observer);
   }
+  
 
 
   updatePieChart(): void {
